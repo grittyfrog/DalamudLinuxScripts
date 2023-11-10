@@ -10,7 +10,7 @@ in
 
 resholve.mkDerivation rec {
   pname = "dalamud-linux-scripts";
-  version = "0.0.1";
+  version = "0.0.2";
 
   src = ./.;
 
