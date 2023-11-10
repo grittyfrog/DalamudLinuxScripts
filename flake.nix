@@ -11,6 +11,7 @@
       forEachSupportedSystem = f: nixpkgs.lib.genAttrs supportedSystems (system: f {
         pkgs = import nixpkgs {
           inherit system;
+          overlays = [ self.overlay ];
           config.allowUnfree = true;
         };
         inherit system;
@@ -19,10 +20,16 @@
       dalamudScript = pkgs: name: (pkgs.writeScriptBin name (builtins.readFile name)).overrideAttrs(old: {
         buildCommand = "${old.buildCommand}\n patchShebangs $out";
       });
-
-
     in
     {
+      overlay = final: prev: {
+        dalamud-linux-scripts = prev.pkgs.callPackage ./default.nix {};
+      };
+
+      packages = forEachSupportedSystem({ pkgs, ... }: {
+        default = pkgs.dalamud-linux-scripts;
+      });
+
       apps = forEachSupportedSystem({ pkgs, system }:
         let
           dalamudApp = name: {
@@ -38,10 +45,6 @@
           (dalamudApp "dalamud-linux-paths")
         ]
       );
-
-      packages = forEachSupportedSystem ({ pkgs, ... }: {
-        default = pkgs.callPackage ./default.nix {};
-      });
 
       templates = {
         dalamud = {
