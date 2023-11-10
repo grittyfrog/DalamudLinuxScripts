@@ -42,7 +42,7 @@ Scripts to help with Dalamud development on Linux.
 - [XIVLauncher.Core](https://github.com/goatcorp/XIVLauncher.Core) must be installed
 - [XIVLauncher.Core](https://github.com/goatcorp/XIVLauncher.Core) must have run and downloaded Dalamud and Wine.
 - Your system must be capable of running Wine, either by:
-  - Nix: Automatically provided (via `steam-run`)
+  - Nix: Dependencies automatically provided (via `steam-run`)
   - Non-nix: Having the necessary dependencies available to execute XIVLauncher's bundled Wine directly from the terminal
 - Your system must have the dotnet7 sdk installed, either by:
   - Nix: Dependency automatically provided
@@ -94,3 +94,9 @@ Default: The last modified folder in `${XLCORE_ROOT}/compatibilitytool/beta`.
 Controls the location Dalamud will be built to, and the location we inject Dalamud from.
 
 Default: `${XLCORE_ROOT}/dalamud/Hooks/localdev`
+
+## `DALAMUD_DEV_LOGPATH`
+
+Where to output the logs when running `dalamud-linux-inject`.
+
+Default: `${XLCORE_ROOT}/logs/localdev`

@@ -36,4 +36,4 @@ $WINECMDPREFIX $WINELOADER $DALAMUD_DEV_INSTALL_PATH/Dalamud.Injector.exe inject
     --dalamud-plugin-directory="${XLCORE_ROOT_WINE}\\installedPlugins" \
     --dalamud-asset-directory="${XLCORE_ROOT_WINE}\\dalamudAssets\\dev" \
     --dalamud-delay-initialize=1000 \
-    --logpath="${LOGPATH}"
+    --logpath="${DALAMUD_DEV_LOGPATH}"
