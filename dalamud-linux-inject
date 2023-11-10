@@ -8,26 +8,28 @@ set -euo pipefail
 # Log path should be relative to users working directory, not the scripts.
 LOGPATH="$(pwd)/dalamud-logs"
 
-cd "$(dirname ${BASH_SOURCE[0]})" || exit
-. ./dalamud-linux-paths.sh
+SCRIPT_FOLDER=$(dirname ${BASH_SOURCE[0]})
+cd "${SCRIPT_FOLDER}" || exit
+source "${SCRIPT_FOLDER}/dalamud-linux-paths"
 
 export WINEDEBUG=-all  # Prevent wine from spamming fixmes.
 export WINEESYNC=1
 export WINEPREFIX=$XLCORE_WINEPREFIX
 
 # Make sure we're using the same wine as XIVLauncher.Core
+export WINECMDPREFIX=""  # Replaced when using nix
 export WINESERVER="${XLCORE_WINE}/bin/wineserver"
 export WINELOADER="${XLCORE_WINE}/bin/wine"
+export WINEPATH="${XLCORE_WINE}/bin/winepath"
 
-XLCORE_ROOT_WINE=$(winepath -w ${XLCORE_ROOT})
+XLCORE_ROOT_WINE=$($WINECMDPREFIX $WINEPATH -w ${XLCORE_ROOT})
 
-DALAMUD_DEV_INSTALL_PATH_WINE=$(winepath -w "${DALAMUD_DEV_INSTALL_PATH}" 2>/dev/null)
-
+DALAMUD_DEV_INSTALL_PATH_WINE=$($WINECMDPREFIX $WINEPATH -w "${DALAMUD_DEV_INSTALL_PATH}" 2>/dev/null)
 
 echo "Injecting Dalamud..."
 
 export DALAMUD_RUNTIME=${XLCORE_ROOT_WINE}\\runtime
-$WINELOADER $DALAMUD_DEV_INSTALL_PATH/Dalamud.Injector.exe inject \
+$WINECMDPREFIX $WINELOADER $DALAMUD_DEV_INSTALL_PATH/Dalamud.Injector.exe inject \
     --all \
     --dalamud-configuration-path="${XLCORE_ROOT_WINE}\\dalamudConfig.json" \
     --dalamud-working-directory="${DALAMUD_DEV_INSTALL_PATH_WINE}" \

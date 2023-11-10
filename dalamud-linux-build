@@ -6,8 +6,8 @@ if [[ ! -f "$(pwd)/Dalamud.sln" ]]; then
     exit 1;
 fi
 
-SOURCE_DIR=$(dirname ${BASH_SOURCE[0]}) || exit
-. "${SOURCE_DIR}/dalamud-linux-paths.sh"
+SCRIPT_FOLDER=$(dirname ${BASH_SOURCE[0]})
+source "${SCRIPT_FOLDER}/dalamud-linux-paths"
 
 # First prepare the output directory by copying the existing dependencies from XLCORE
 #
