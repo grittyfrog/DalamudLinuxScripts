@@ -1,11 +1,19 @@
 #!/usr/bin/env bash
+set -euo pipefail
 
 export XLCORE_ROOT="$HOME/.xlcore"
 
-if [ -z "${XLCORE_WINE}" ]; then
+# The wine path that XLCore should be using
+if [ -z "${XLCORE_WINE-}" ]; then
   # We assume that the last modified directory is the active wine directory.
   XLCORE_WINE=$(find ~/.xlcore/compatibilitytool/beta -mindepth 1 -maxdepth 1 -printf "%T@\t%p\n" | sort -nr | cut -f2- | head -1)
   export XLCORE_WINE
+fi;
+
+# The build of Dalamud we want to inject. By default we assume it is one
+# built with `dalamud-build.sh`
+if [ -z "${DALAMUD_DEV_INSTALL_PATH-}" ]; then
+    DALAMUD_DEV_INSTALL_PATH="${XLCORE_ROOT}/dalamud/Hooks/localdev"
 fi;
 
 export XLCORE_WINEPREFIX=$XLCORE_ROOT/wineprefix/
@@ -14,4 +22,5 @@ if [[ ! "${BASH_SOURCE[0]}" != "${0}" ]]; then
     echo "XLCORE_ROOT: $XLCORE_ROOT"
     echo "XLCORE_WINE: $XLCORE_WINE"
     echo "XLCORE_WINEPREFIX: $XLCORE_WINEPREFIX"
+    echo "DALAMUD_DEV_INSTALL_PATSH: $DALAMUD_DEV_INSTALL_PATH"
 fi
