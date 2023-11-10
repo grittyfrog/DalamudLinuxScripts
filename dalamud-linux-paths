@@ -1,12 +1,14 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-export XLCORE_ROOT="$HOME/.xlcore"
+if [ -z "${XLCORE_ROOT-}" ]; then
+  export XLCORE_ROOT="$HOME/.xlcore"
+fi
 
 # The wine path that XLCore should be using
 if [ -z "${XLCORE_WINE-}" ]; then
   # We assume that the last modified directory is the active wine directory.
-  XLCORE_WINE=$(find ~/.xlcore/compatibilitytool/beta -mindepth 1 -maxdepth 1 -printf "%T@\t%p\n" | sort -nr | cut -f2- | head -1)
+  XLCORE_WINE=$(find "${XLCORE_ROOT}/compatibilitytool/beta" -mindepth 1 -maxdepth 1 -printf "%T@\t%p\n" | sort -nr | cut -f2- | head -1)
   export XLCORE_WINE
 fi;
 
