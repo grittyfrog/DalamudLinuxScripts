@@ -34,7 +34,7 @@ Scripts to help with Dalamud development on Linux.
 # Launch XIV. Make sure to launch with the Dalamud "ACL-Only Fix" under `Settings > Dalamud > Load Method`
 
 # Manually Inject
-> nix run github:grittyfrog/DalamudLinuxScripts#dalamud-linux-inject
+> ./DalamudLinuxScripts/dalamud-linux-inject
 ```
 
 # Pre-requisites
@@ -42,8 +42,11 @@ Scripts to help with Dalamud development on Linux.
 - [XIVLauncher.Core](https://github.com/goatcorp/XIVLauncher.Core) must be installed
 - [XIVLauncher.Core](https://github.com/goatcorp/XIVLauncher.Core) must have run and downloaded Dalamud and Wine.
 - Your system must be capable of running Wine, either by:
-  - Having the necessary dependencies available to execute XIVLauncher's bundled Wine directly from the terminal
-  - Using the nix integration (which uses `steam-run`)
+  - Nix: Automatically provided (via `steam-run`)
+  - Non-nix: Having the necessary dependencies available to execute XIVLauncher's bundled Wine directly from the terminal
+- Your system must have the dotnet7 sdk installed, either by:
+  - Nix: Dependency automatically provided
+  - Non-nix: Installing it using your OS's usual mechanisms
 
 # Usage
 
