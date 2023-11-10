@@ -19,10 +19,9 @@ resholve.mkDerivation rec {
 
   installPhase = ''
     mkdir -p $out/bin
-    ls $src/dalamud-linux-*
     cp $src/dalamud-linux-* $out/bin
 
-    substituteInPlace $out/bin/*.sh --replace "WINECMDPREFIX=\"\"" "WINECMDPREFIX=\"${wine-steam-run}\""
+    substituteInPlace $out/bin/* --replace "WINECMDPREFIX=\"\"" "WINECMDPREFIX=\"${wine-steam-run}\""
   '';
 
   solutions = {

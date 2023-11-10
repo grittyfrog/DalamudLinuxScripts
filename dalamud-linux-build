@@ -17,5 +17,8 @@ cp -r "${XLCORE_ROOT}"/dalamud/Hooks/dev/* "${DALAMUD_DEV_INSTALL_PATH}/"
 
 # Now we build what we can and override the copied dependencies
 dotnet build Dalamud \
+    /nodeReuse:false \
+    /p:UseSharedCompilation=false \
+    /p:EnableWindowsTargeting=true \
     --configuration Release \
     --output "${DALAMUD_DEV_INSTALL_PATH}"
