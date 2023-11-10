@@ -42,5 +42,17 @@
       packages = forEachSupportedSystem ({ pkgs, ... }: {
         default = pkgs.callPackage ./default.nix {};
       });
+
+      templates = {
+        dalamud = {
+          path = ./nix/dalamud-flake;
+          description = "A flake for building Dalamud";
+        };
+
+        plugin = {
+          path = ./nix/plugin-flake;
+          description = "A flake for building Dalamud plugins";
+        };
+      };
     };
 }
