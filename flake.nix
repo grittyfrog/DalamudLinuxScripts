@@ -24,10 +24,12 @@
     {
       overlay = final: prev: {
         dalamud-linux-scripts = prev.pkgs.callPackage ./default.nix {};
+        FFXIVClientStructs-CExporter = prev.pkgs.callPackage ./nix/FFXIVClientStructs-CExporter {};
       };
 
       packages = forEachSupportedSystem({ pkgs, ... }: {
         default = pkgs.dalamud-linux-scripts;
+        CExporter = pkgs.FFXIVClientStructs-CExporter;
       });
 
       apps = forEachSupportedSystem({ pkgs, system }:
@@ -43,6 +45,12 @@
           (dalamudApp "dalamud-linux-clean")
           (dalamudApp "dalamud-linux-inject")
           (dalamudApp "dalamud-linux-paths")
+          {
+            CExporter = {
+              type = "app";
+              program = "${self.packages.${system}.CExporter}/bin/CExporter";
+            };
+          }
         ]
       );
 
